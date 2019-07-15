@@ -1,6 +1,6 @@
 // Vendors
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
+import { UpdateResult, DeleteResult } from 'typeorm';
 
 // Services
 import { MailService } from './../core/services';
@@ -39,6 +39,11 @@ export class MailController {
     @Post('getColOfUnreadedLetter')
     public async getColOfUnreadedLetter(@Body() userId: {userId: number}): Promise<number> {
         return await this.mailService.getColOfUnreadedLetter(userId.userId)
+    }
+
+    @Post('deleteLetter')
+    public async deleteLetter(@Body() idLetter: {idLetter: number}): Promise<DeleteResult> {
+        return await this.mailService.deleteLetter(idLetter.idLetter)
     }
 
 }

@@ -1,7 +1,7 @@
 // Vendors
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getCustomRepository, UpdateResult } from 'typeorm';
+import { Repository, getCustomRepository, UpdateResult, DeleteResult } from 'typeorm';
 
 // Entities
 import { Letters, Users } from '../entities';
@@ -94,5 +94,20 @@ export class MailService {
 
     public async getColOfUnreadedLetter(userId: number): Promise<number> {
         return await this.mailRep.getColOfUnreadedLetter(userId);
+    }
+
+    public async deleteLetter(idLetter: number): Promise<DeleteResult> {
+        const isLetter = await this.mailRep.findById(idLetter);
+
+        if (isLetter !== undefined) {
+            return await this.mailRep.deleteLetter(idLetter)
+        }   
+
+        if (isLetter === undefined) {
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: 'Letter not found',
+            }, 400);
+        }
     }
 }

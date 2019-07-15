@@ -1,5 +1,5 @@
 // Vendors
-import { EntityRepository, Repository, Not, Connection, UpdateResult } from "typeorm";
+import { EntityRepository, Repository, Not, Connection, UpdateResult, DeleteResult } from "typeorm";
 
 // Entities
 import { Letters, Users } from "./../../core/entities";
@@ -64,6 +64,16 @@ export class MailRepository extends Repository<Letters> {
         })
 
         return await letters.length;
+    }
+
+    public async findById(idLetter: number): Promise<Letters> {
+        return await this.findOne({
+            where: {idLetter: idLetter}
+        })
+    }
+
+    public async deleteLetter(idLetter: number): Promise<DeleteResult> {
+        return await this.delete({idLetter: idLetter})
     }
 
 }

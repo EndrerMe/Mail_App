@@ -17,10 +17,10 @@
       <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
         loadingSpinner="bubbles">
-          <ion-item 
+          <ion-item
           *ngFor="let letter of letters"
           (click)="showMessage(letter.idLetter)">
-            <ion-label>
+            <ion-label [hidden]="visibility === letter.idLetter">
               <h2>
                 {{ letter.recipient.userName }}
               </h2>
