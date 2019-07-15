@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "password",
+    "database": "mail",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+      "dist/core/entities/*.entity{.ts,.js}"
+    ],
+    "cli": {
+      "entitiesDir": "src/core/entities/entity"
+    }
+}

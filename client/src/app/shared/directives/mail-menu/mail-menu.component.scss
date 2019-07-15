@@ -1,0 +1,48 @@
+ion-menu {
+    ion-content {
+        position: relative;
+    
+        ion-icon {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            margin: 25px 0 0 80%;
+            z-index: 9999;
+        }
+    
+        .avatar {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 200px;
+            margin: 15px 0 0 5px; 
+            text-decoration: none;
+            text-align: center;
+        
+            .userName {
+                margin-top: 20px;
+            } 
+        
+            ion-avatar {
+                width: 150px;
+                height: 150px;     
+                margin: auto auto;
+            }
+            
+        }
+        
+        // .item-inner {
+        //     border-color: none;
+        //     border-bottom: 0;
+        // }
+        
+        ion-list {
+            margin-top: 20px;
+        
+            ion-item {
+                margin-top: 15px;
+            }
+        }
+    
+    }
+}

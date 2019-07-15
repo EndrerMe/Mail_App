@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>New Letter</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <form [formGroup]='newLetterForm' (ngSubmit)="sendLetter()">
+    <ion-grid>
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div padding>
+            <ion-item>
+              <ion-input name="text" formControlName="recipient" 
+              autocomplete="on" autocorrect="on" [value]="replyUser"
+              type="email" placeholder="To" ngModel required></ion-input>
+              <ion-icon ios="ios-add" md="md-add" (click)="addRecipient()"></ion-icon>
+            </ion-item>
+            <ion-chip *ngFor="let recipient of recipients">
+              <ion-label>{{ recipient }}</ion-label>
+              <ion-icon name="close" (click)="deleteRecipient(recipient)"></ion-icon>
+            </ion-chip>
+            <ion-item>
+                <ion-textarea formControlName="letterText"
+                placeholder="You letter..." maxlength='5000' >
+              </ion-textarea>
+            </ion-item>
+          </div>
+          <div padding>
+            <ion-button size="large" type="submit" expand="block">Send</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Outgoing</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+        loadingSpinner="bubbles">
+          <ion-item 
+          *ngFor="let letter of letters"
+          (click)="showMessage(letter.idLetter)">
+            <ion-label>
+              <h2>
+                {{ letter.recipient.userName }}
+              </h2>
+              <p>
+                {{ letter.letterText }}
+              </p>
+            </ion-label>
+      
+            <ion-card [hidden]="visibility !== letter.idLetter">
+              
+              <ion-card-header>
+                <ion-card-title>To {{ letter.recipient.userName }}</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                  {{ letter.letterText }}
+              </ion-card-content>
+              
+            </ion-card>
+            
+          </ion-item>
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+  </ion-list>
+</ion-content>

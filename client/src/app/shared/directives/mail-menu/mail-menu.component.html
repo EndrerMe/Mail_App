@@ -1,0 +1,38 @@
+<ion-menu contentId="content" type="overlay">
+
+  <ion-content>
+    
+    <ion-list>
+      <ion-menu-toggle>
+        <ion-icon ios="ios-log-out"
+          md="md-log-out" (click)="singOut()"></ion-icon>
+      </ion-menu-toggle>
+      <ion-toolbar class="avatar" 
+      lines="none" auth-hide="false">
+        <ion-avatar>
+          <img [src]="avatarUrl"
+          (click)="uploadImage()">
+        </ion-avatar>
+        <input id="uploadFile" type="file" 
+        style="display: none;"
+        (change)="changeListener($event)">
+        <div class="userName">
+          <strong class="userName">{{ userName }}</strong>
+        </div>
+      </ion-toolbar>
+
+      <ion-menu-toggle auth-hide="false" *ngFor="let page of menuLinks">
+        <ion-item detail
+        [routerLink]="page.url"
+        routerDirection="root">
+        <ion-badge slot="start">{{ page.unreadedLetter }}</ion-badge>
+          {{ page.title }}
+        </ion-item>
+      </ion-menu-toggle>
+
+    </ion-list>
+  </ion-content>
+  
+</ion-menu>
+
+<ion-router-outlet id="content" [swipeGesture]="false"></ion-router-outlet>
