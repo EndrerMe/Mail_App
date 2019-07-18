@@ -18,27 +18,27 @@ export class MailService {
 
 
     public getAllIncoming(userId: number): Observable<ILetter[]> {
-        return this.http.post<ILetter[]>(`${environment.mySql.databaseURL}/mail/getAllIncoming`, {userId})
+        return this.http.post<ILetter[]>(`${environment.mySql.databaseURL}/mail/getAllIncoming`, {userId});
     }
 
     public getAllOutcoming(userId: number): Observable<ILetter[]> {
-        return this.http.post<ILetter[]>(`${environment.mySql.databaseURL}/mail/getAllOutcoming`, {userId})
+        return this.http.post<ILetter[]>(`${environment.mySql.databaseURL}/mail/getAllOutcoming`, {userId});
     }
 
     public sendLetter(letter: INewLetter): Observable<INewLetter> {
-        return this.http.post<INewLetter>(`${environment.mySql.databaseURL}/mail/sendLetter`, letter)
+        return this.http.post<INewLetter>(`${environment.mySql.databaseURL}/mail/sendLetter`, letter);
     }
 
     public readLetter(letterId: number): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.mySql.databaseURL}/mail/read`, {letterId})
+        return this.http.post<boolean>(`${environment.mySql.databaseURL}/mail/read`, {letterId});
     }
 
     public getColOfUnreadedLetter(userId: number): Observable<number> {
-        return this.http.post<number>(`${environment.mySql.databaseURL}/mail/getColOfUnreadedLetter`, {userId})
+        return this.http.post<number>(`${environment.mySql.databaseURL}/mail/getColOfUnreadedLetter`, {userId});
     }
 
-    public deleteLetter(idLetter: number): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.mySql.databaseURL}/mail/deleteLetter`, {idLetter})
+    public deleteLetter(idLetter: number, idUser: number): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.mySql.databaseURL}/mail/deleteLetter`, {idLetter, idUser});
     }
 
 }

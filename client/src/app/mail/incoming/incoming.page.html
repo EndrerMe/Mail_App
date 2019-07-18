@@ -19,7 +19,7 @@
         loadingSpinner="circles">
 
           <ion-item-sliding *ngFor="let letter of letters"
-          (ionSwipe)="logDrag(letter.idLetter)">
+          (ionSwipe)="deleteLetter(letter.idLetter)">
 
             <ion-item-options side="end" color="danger">
               <ion-item-option color="danger">
@@ -53,6 +53,7 @@
                   <br>
                   <p (click)="reply(letter.sender.userName)">Ответить</p>
 
+                  <p class="date">{{ letter.date }}</p>
                 </ion-card-content>
                 
               </ion-card>

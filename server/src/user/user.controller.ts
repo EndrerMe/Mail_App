@@ -16,7 +16,7 @@ export class UserController {
 
     @Post('chagneUserAvatar')
     public async chagneUserAvatar(@Body() user: IUser): Promise<UpdateResult> {
-        return await this.userService.chagneUserAvatar(user)
+        return await this.userService.chagneUserAvatar(user);
     }
 
 }

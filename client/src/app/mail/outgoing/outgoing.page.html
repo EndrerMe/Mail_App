@@ -17,31 +17,41 @@
       <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
         loadingSpinner="bubbles">
-          <ion-item
-          *ngFor="let letter of letters"
-          (click)="showMessage(letter.idLetter)">
-            <ion-label [hidden]="visibility === letter.idLetter">
-              <h2>
-                {{ letter.recipient.userName }}
-              </h2>
-              <p>
-                {{ letter.letterText }}
-              </p>
-            </ion-label>
-      
-            <ion-card [hidden]="visibility !== letter.idLetter">
-              
-              <ion-card-header>
-                <ion-card-title>To {{ letter.recipient.userName }}</ion-card-title>
-              </ion-card-header>
-            
-              <ion-card-content>
+          
+          <ion-item-sliding *ngFor="let letter of letters"
+          (ionSwipe)="logDrag(letter.idLetter)"> 
+
+            <ion-item-options side="end" color="danger">
+              <ion-item-option color="danger">
+                <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+        
+            <ion-item (click)="showMessage(letter.idLetter)">
+              <ion-label [hidden]="visibility === letter.idLetter">
+                <h2>
+                  {{ letter.recipient.userName }}
+                </h2>
+                <p>
                   {{ letter.letterText }}
-              </ion-card-content>
+                </p>
+              </ion-label>
+        
+              <ion-card [hidden]="visibility !== letter.idLetter">
+                
+                <ion-card-header>
+                  <ion-card-title>To {{ letter.recipient.userName }}</ion-card-title>
+                </ion-card-header>
               
-            </ion-card>
-            
-          </ion-item>
+                <ion-card-content>
+                    {{ letter.letterText }}
+                </ion-card-content>
+                
+              </ion-card>
+              
+            </ion-item>
+
+          </ion-item-sliding>
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
   </ion-list>

@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate  {
   ) { }
 
   public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    const currentUser = await this.storage.get("currentUser")
+    const currentUser = await this.storage.get('currentUser')
 
     if (currentUser) {
       return true;

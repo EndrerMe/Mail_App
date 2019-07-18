@@ -20,8 +20,8 @@
           <div padding>
             <ion-item>
               <ion-input name="text" formControlName="recipient" 
-              autocomplete="on" autocorrect="on" [value]="replyUser"
-              type="email" placeholder="To" ngModel required></ion-input>
+              autocomplete="on" autocorrect="on" [(ngModel)]="replyUser"
+              type="email" placeholder="To" ngModel required autofocus></ion-input>
               <ion-icon ios="ios-add" md="md-add" (click)="addRecipient()"></ion-icon>
             </ion-item>
             <ion-chip *ngFor="let recipient of recipients">

@@ -24,7 +24,7 @@ import { UserModule } from './user/user.module';
   providers: [AppService],
 })
 export class AppModule {
-  constructor (
+  constructor(
     private readonly connection: Connection,
     ) {}
 }

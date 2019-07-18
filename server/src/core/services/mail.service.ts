@@ -13,32 +13,26 @@ import { INewLetter } from '../interfaces';
 @Injectable()
 export class MailService {
     private mailRep = getCustomRepository(MailRepository);
-    private userRep = getCustomRepository(AuthRepository)
+    private userRep = getCustomRepository(AuthRepository);
 
-    constructor (
+    constructor(
         @InjectRepository(Letters)
         private readonly mailRepository: Repository<Letters>,
         @InjectRepository(Users)
-        private readonly userRepository: Repository<Users>
+        private readonly userRepository: Repository<Users>,
     ) {}
 
     public async getAllIncoming(userId: number): Promise<Letters[]> {
-        return await this.mailRep.getAllIncoming(userId)
+        return await this.mailRep.getAllIncoming(userId);
     }
 
     public async getAllOutcoming(userId: number): Promise<Letters[]> {
-        return await this.mailRep.getAllOutcoming(userId)
+        return await this.mailRep.getAllOutcoming(userId);
     }
 
     public async sendLetter(letter: INewLetter): Promise<Letters> {
-        let recipient: Users[] = [];
+        const recipient: Users[] = [];
         let sender: Users;
-        let letterValue: {
-            letterText: string,
-            sender: Users,
-            recipient: Users[],
-            isRead: boolean,
-        };
 
         for (let i = 0; i < letter.recipient.length; i++) {
             await this.userRep.findByName(letter.recipient[i]).then((res) => {
@@ -48,12 +42,17 @@ export class MailService {
                     status: HttpStatus.BAD_REQUEST,
                     error: `${letter.recipient[i]} not found`,
                 }, 400);
-            })
+            });
         }
 
         await this.userRep.findById(letter.sender).then((res) => {
             sender = res;
-        })
+        }, (err) => {
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: `${letter.sender} not found`,
+            }, 400);
+        });
 
         if (recipient.length === 0) {
             throw new HttpException({
@@ -78,30 +77,33 @@ export class MailService {
             }
         }
 
-        letterValue = {
-            letterText: letter.letterText,
-            sender: sender,
-            recipient: recipient,
-            isRead: false
+        for (let i = 0; i < recipient.length; i++) {
+            const letterValue = {
+                letterText: letter.letterText,
+                sender: sender,
+                recipient: recipient[i],
+            };
+
+            await this.mailRep.sendLetter(letterValue);
         }
 
-        return await this.mailRep.sendLetter(letterValue)
+        return;
     }
 
     public async read(letterId: number): Promise<UpdateResult> {
-        return await this.mailRep.read(letterId)
+        return await this.mailRep.read(letterId);
     }
 
     public async getColOfUnreadedLetter(userId: number): Promise<number> {
         return await this.mailRep.getColOfUnreadedLetter(userId);
     }
 
-    public async deleteLetter(idLetter: number): Promise<DeleteResult> {
+    public async deleteLetter(idLetter: number, idUser: number): Promise<DeleteResult> {
         const isLetter = await this.mailRep.findById(idLetter);
 
         if (isLetter !== undefined) {
-            return await this.mailRep.deleteLetter(idLetter)
-        }   
+            return await this.mailRep.deleteLetter(isLetter, idUser);
+        }
 
         if (isLetter === undefined) {
             throw new HttpException({

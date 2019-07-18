@@ -26,6 +26,6 @@ export class AuthService {
   }
 
   public chagneUserAvatar(user: IUser): Observable<IUser> {
-    return this.http.post<IUser>(`${environment.mySql.databaseURL}/user/chagneUserAvatar`, user)
+    return this.http.post<IUser>(`${environment.mySql.databaseURL}/user/chagneUserAvatar`, user);
   }
 }

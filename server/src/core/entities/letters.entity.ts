@@ -1,5 +1,5 @@
 // Vendors
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Index, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, UpdateDateColumn } from 'typeorm';
 
 // Entities
 import { Users } from './';
@@ -7,7 +7,7 @@ import { Users } from './';
 @Entity()
 export class Letters {
     @PrimaryGeneratedColumn()
-    idLetter: number;
+    idLetter?: number;
 
     @ManyToOne(
         type => Users,
@@ -26,6 +26,21 @@ export class Letters {
     @Column({length: 5000})
     letterText: string;
 
-    @Column()
-    isRead: boolean
+    @Column({
+        default: () => false,
+    })
+    senderDelete?: boolean;
+
+    @Column({
+        default: () => false,
+    })
+    recipientDelete?: boolean;
+
+    @Column({
+        default: () => false,
+    })
+    isRead?: boolean;
+
+    @UpdateDateColumn()
+    date?: Date;
 }

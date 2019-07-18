@@ -11,7 +11,7 @@ export class AlertService {
         private alertController: AlertController,
     ) {}
 
-    public async alertAuth(header: string) {
+    public async alert(header: string) {
         const alert = await this.alertController.create({
             header: header,
             message: 'Please, check your data',

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { PickerModule } from '@ctrl/ngx-emoji-mart'
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 // Pages
 import { NewLetterPage } from 'src/app/mail/new-letter/new-letter.page';
@@ -29,7 +29,6 @@ const routes: Routes = [
   ],
   declarations: [NewLetterPage],
   providers: [
-    
   ]
 })
 export class NewLetterPageModule {}

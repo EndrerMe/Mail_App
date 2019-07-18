@@ -27,12 +27,11 @@ export class LoginPage implements OnInit {
     private router: Router,
     private storage: Storage,
   ) {
-    
-    this.storage.get("currentUser").then((res) => {
+    this.storage.get('currentUser').then((res) => {
       if (res) {
         this.router.navigateByUrl('mail');
       }
-    })
+    });
 
     this.show = false;
   }
@@ -58,11 +57,11 @@ export class LoginPage implements OnInit {
     this.authService.login(formValue).subscribe( async (res) => {
       const decode = jwt_decode(res.token);
       this.storage.set('currentUser', decode);
-      this.router.navigateByUrl('mail');
+      this.router.navigate(['mail'], { replaceUrl: true });
     },
     (err) => {
-      this.alertService.alertAuth(err.error.error);
-    })
+      this.alertService.alert(err.error.error);
+    });
   }
 
   public showPassword(): void {

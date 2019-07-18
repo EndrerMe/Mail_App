@@ -18,11 +18,12 @@ import { ILetter } from 'src/app/shared/interfaces';
 })
 export class IncomingPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  
+
   public userName: string;
   public letters: ILetter[];
-  public senderAvatarUrl: Object;
+  public senderAvatarUrl: object;
   private visibility: number;
+  private currentUserId: number;
 
   constructor(
     private mailService: MailService,
@@ -32,23 +33,29 @@ export class IncomingPage implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private toastController: ToastController,
-  ) { 
-    this.storage.get("currentUser").then((res) => {
+  ) {
+
+    this.storage.remove('reply');
+
+    this.storage.get('currentUser').then((res) => {
       this.mailService.getAllIncoming(res.idUser).subscribe((res) => {
         this.letters = res;
-
         for (let i = 0; i < this.letters.length; i++) {
-          let avatar = this.letters[i].sender.userAvatar;
+          const avatar = this.letters[i].sender.userAvatar;
           this.letters[i].sender.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(avatar) as string;
         }
       },
       (err) => {
-        console.log(err)
-      })
-    })
+        console.log(err);
+      });
+
+      this.currentUserId = res.idUser;
+    });
+
   }
 
   ngOnInit() {
+
   }
 
   public showMessage(letterId: number, isRead: boolean): void {
@@ -67,8 +74,8 @@ export class IncomingPage implements OnInit {
         }
       },
       (err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
     }
 
     this.visibility = letterId;
@@ -76,17 +83,17 @@ export class IncomingPage implements OnInit {
 
   public doRefresh(event) {
     setTimeout(() => {
-      this.storage.get("currentUser").then((res) => {
+      this.storage.get('currentUser').then((res) => {
         this.mailService.getAllIncoming(res.idUser).subscribe((res) => {
           this.letters = res;
 
           for (let i = 0; i < this.letters.length; i++) {
-            let avatar = this.letters[i].sender.userAvatar;
+            const avatar = this.letters[i].sender.userAvatar;
             this.letters[i].sender.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(avatar) as string;
           }
         },
         (err) => {
-          console.log(err)
+          console.log(err);
         });
       });
       event.target.complete();
@@ -100,12 +107,12 @@ export class IncomingPage implements OnInit {
   }
 
   public reply(userName: string): void {
-    this.events.publish('reply', userName);
+    this.storage.set('reply', userName);
     this.router.navigateByUrl('/mail/newLetter');
   }
 
-  public logDrag(idLetter: number): void {
-    this.mailService.deleteLetter(idLetter).subscribe( async (res) => {
+  public deleteLetter(idLetter: number): void {
+    this.mailService.deleteLetter(idLetter, this.currentUserId).subscribe( async (res) => {
       for (let i = 0; i < this.letters.length; i++) {
         if (idLetter === this.letters[i].idLetter) {
           this.letters.splice(i, 1);
@@ -120,8 +127,8 @@ export class IncomingPage implements OnInit {
 
       toast.present();
     }, (err) => {
-      this.alertService.alertAuth(err.error.error)
-    })
+      this.alertService.alert(err.error.error);
+    });
   }
 
 }

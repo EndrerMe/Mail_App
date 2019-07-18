@@ -1,11 +1,12 @@
+// Vendors
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
 
-import { IncomingPage } from './incoming.page';
+// Pages
+import { IncomingPage } from 'src/app/mail/incoming/incoming.page';
 
 const routes: Routes = [
   {

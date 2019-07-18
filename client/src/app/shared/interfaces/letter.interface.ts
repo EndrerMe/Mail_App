@@ -7,4 +7,5 @@ export interface ILetter {
     recipient: IUser;
     sender: IUser;
     isRead: boolean;
+    date: Date;
 }

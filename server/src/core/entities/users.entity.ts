@@ -22,11 +22,11 @@ export class Users {
         type => Letters,
         letter => letter.sender,
         )
-    sent: Letters[]
+    sent: Letters[];
 
     @OneToMany(
         type => Letters,
         letter => letter.recipient,
         )
-    received: Letters[]
+    received: Letters[];
 }

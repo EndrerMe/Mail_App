@@ -48,13 +48,13 @@ export class MailMenuComponent implements OnInit {
     this.storage.get('currentUser').then((res) => {
       this.user = res;
       this.userName = res.userName;
-      this.avatarUrl = this.domSanitizer.bypassSecurityTrustUrl(res.userAvatar)
+      this.avatarUrl = this.domSanitizer.bypassSecurityTrustUrl(res.userAvatar);
 
       this.mailService.getColOfUnreadedLetter(res.idUser).subscribe((res) => {
         this.menuLinks[0].unreadedLetter = res;
       }, (err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
 
     }, (err) => {
       console.log(err);
@@ -62,14 +62,16 @@ export class MailMenuComponent implements OnInit {
 
     this.events.subscribe('oneLetterHasBeenRead', (res) => {
       this.menuLinks[0].unreadedLetter -= 1;
-    })
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public singOut(): void {
     this.storage.remove('currentUser').then((res) => {
-      this.router.navigateByUrl('auth');
+      console.log('res');
+      this.router.navigate(['auth'], { replaceUrl: true });
     });
   }
 
@@ -82,7 +84,7 @@ export class MailMenuComponent implements OnInit {
   }
 
   public async readThis(inputValue: any): Promise<void> {
-    let file: File = inputValue.files[0];
+    const file: File = inputValue.files[0];
     const myReader: FileReader = new FileReader();
 
     // await this.ng2ImgMax.resizeImage(file, 100, 100).subscribe(
@@ -101,7 +103,7 @@ export class MailMenuComponent implements OnInit {
 
       delete this.user.iat;
       delete this.user.exp;
-      
+
       this.authService.chagneUserAvatar(this.user).subscribe((res) => {
         this.storage.set('currentUser', this.user);
       },

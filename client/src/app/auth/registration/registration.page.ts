@@ -26,11 +26,11 @@ export class RegistrationPage implements OnInit {
     private router: Router,
     private storage: Storage,
   ) {
-    this.storage.get("currentUser").then((res) => {
+    this.storage.get('currentUser').then((res) => {
       if (res) {
-        this.router.navigate(['mail'])
+        this.router.navigate(['mail']);
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -60,13 +60,13 @@ export class RegistrationPage implements OnInit {
       delete formValue.userRepeatPassword;
       this.authService.registration(formValue).subscribe((res) => {
         this.registForm.reset();
-        this.router.navigate(['auth/login'])
+        this.router.navigate(['auth/login']);
       },
       (err) => {
-        this.alertService.alertAuth(err.error.error)
+        this.alertService.alert(err.error.error);
       });
     } else {
-      this.alertService.alertAuth("Your passwords do not match")
+      this.alertService.alert('Your passwords do not match');
     }
   }
 

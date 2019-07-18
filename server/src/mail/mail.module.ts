@@ -14,10 +14,10 @@ import { Letters, Users } from './../core/entities';
     TypeOrmModule.forFeature([Letters, Users]),
   ],
   controllers: [
-    MailController
+    MailController,
   ],
   providers: [
     MailService,
-  ]
+  ],
 })
 export class MailModule {}
