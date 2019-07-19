@@ -2,7 +2,7 @@
 import { IUser } from '.';
 
 export interface ILetter {
-    idLetter: number,
+    idLetter: number;
     letterText: string;
     recipient: IUser;
     sender: IUser;

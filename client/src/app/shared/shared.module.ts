@@ -10,15 +10,15 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   declarations: [],
   imports: [
     CommonModule,
-    FormsModule, 
-    ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-    AlertService
+    AlertService,
   ],
   exports: [
     CommonModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
   ]
 })

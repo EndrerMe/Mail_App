@@ -38,6 +38,24 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadChildren: 'src/app/mail/settings/settings.module#SettingsPageModule'
+          }
+        ]
+      },
+      {
+        path: 'unreaded',
+        children: [
+          {
+            path: '',
+            loadChildren: 'src/app/mail/unreaded/unreaded.module#UnreadedPageModule'
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/mail/incoming',
         pathMatch: 'full'

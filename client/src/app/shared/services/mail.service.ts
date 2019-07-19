@@ -41,4 +41,12 @@ export class MailService {
         return this.http.post<boolean>(`${environment.mySql.databaseURL}/mail/deleteLetter`, {idLetter, idUser});
     }
 
+    public getUnreaded(idUser: number): Observable<ILetter[]> {
+        return this.http.post<ILetter[]>(`${environment.mySql.databaseURL}/mail/getUnreaded`, {idUser})
+    }
+
+    public deleteMany(letters: number[]): Observable<ILetter> {
+        return this.http.post<ILetter>(`${environment.mySql.databaseURL}/mail/deleteMany`, letters)
+    }
+
 }

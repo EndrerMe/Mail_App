@@ -46,4 +46,14 @@ export class MailController {
         return await this.mailService.deleteLetter(letter.idLetter, letter.idUser);
     }
 
+    @Post('getUnreaded')
+    public async getUnreaded(@Body() idUser: {idUser: number}): Promise<Letters[]> {
+        return await this.mailService.getUnreaded(idUser.idUser)
+    }
+
+    @Post('deleteMany')
+    public async deleteMany(@Body() letters: number[]): Promise<DeleteResult> {
+        return await this.mailService.deleteMany(letters);
+    }
+
 }

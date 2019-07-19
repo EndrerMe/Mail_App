@@ -2,3 +2,31 @@
     --ion-safe-area-top: 20px;
     --ion-safe-area-bottom: 22px;
   }
+
+ion-item-sliding {
+
+  ion-card {
+    
+    ion-card-content {
+
+      ion-avatar {
+        margin: auto;
+        margin-bottom: 25px;
+      }
+
+    }
+
+  }
+
+}
+
+.multiselectToolbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 99999;
+
+  ion-icon {
+    margin: auto;
+  }
+}

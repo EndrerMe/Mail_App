@@ -83,4 +83,26 @@ export class MailRepository extends Repository<Letters> {
 
     }
 
+    public async getUnreaded(idUser: number): Promise<Letters[]> {
+        return await this.find({
+            relations: ['sender', 'recipient'],
+            where: {
+                recipient: {
+                    idUser: idUser,
+                },
+
+                isRead: false,
+                recipientDelete: false,
+            },
+        });
+    }
+
+    public async deleteMany(letters: number[]): Promise<DeleteResult> {
+        for (let i = 0; i < letters.length; i++) {
+            await this.delete({idLetter: letters[i]})
+        }
+
+        return;
+    }
+
 }

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-toolbar class="avatar" lines="none">
+      <ion-avatar>
+        <img [src]="avatarUrl"
+        (click)="uploadImage()">
+      </ion-avatar>
+      <input id="uploadFile" type="file" 
+      style="display: none;"
+      (change)="changeListener($event)">
+      <div class="userName">
+        <h2><strong> {{ userName }} </strong></h2>
+      </div>
+    </ion-toolbar>
+
+    <ion-item>
+      <ion-label> Hide read messages? </ion-label>
+      <ion-toggle color="success" (ionChange)="toogleLetter($event)"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

@@ -1,8 +1,12 @@
+// Vendors
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import 'hammerjs';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+// Module
+import { AppModule } from 'src/app/app.module';
+// Enviroments
+import { environment } from 'src/environments/environment';
 
 if (environment.production) {
   enableProdMode();

@@ -1,6 +1,6 @@
 // Vendors
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 // Components
 import { AppComponent } from 'src/app/app.component';
+// Helpers
+import { IonicGestureConfig } from 'src/app/shared/helpers/'
 
 @NgModule({
   declarations: [
@@ -28,7 +30,11 @@ import { AppComponent } from 'src/app/app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: IonicGestureConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

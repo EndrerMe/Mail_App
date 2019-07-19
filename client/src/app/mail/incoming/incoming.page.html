@@ -17,51 +17,64 @@
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"> 
         <ion-infinite-scroll-content
         loadingSpinner="circles">
+            
+          <div class="upper">
+        
+            <ion-item-sliding *ngFor="let letter of letters"
+            (ionSwipe)="deleteLetter(letter.idLetter)">
 
-          <ion-item-sliding *ngFor="let letter of letters"
-          (ionSwipe)="deleteLetter(letter.idLetter)">
+              <ion-item-options side="end" color="danger">
+                <ion-item-option color="danger">
+                  <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
 
-            <ion-item-options side="end" color="danger">
-              <ion-item-option color="danger">
-                <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
+              <div (press)="onPress($event)">
+                <ion-item
+                (click)="showMessage(letter.idLetter, letter.isRead)">
+                  <ion-avatar slot="start" [hidden]="visibility === letter.idLetter">
+                    <img [src]="letter.sender.userAvatar">
+                  </ion-avatar>
+                  <ion-label [hidden]="visibility === letter.idLetter">
+                    <h2>
+                      {{ letter.sender.userName }}
+                    </h2>
+                    <p>
+                      {{ letter.letterText }}
+                    </p>
+                  </ion-label>
+                  <ion-icon ios="ios-mail" md="md-mail" [hidden]="letter.isRead || visibility === letter.idLetter"></ion-icon>
+                  <ion-card [hidden]="visibility !== letter.idLetter">
+                    
+                    <ion-card-header>
+                      <ion-card-title>From {{ letter.sender.userName }}</ion-card-title>
+                    </ion-card-header>
+                  
+                    <ion-card-content>
+                      {{ letter.letterText }}
+                      <br>
+                      <br>
+                      <p (click)="reply(letter.sender.userName)">Ответить</p>
 
-            <ion-item 
-            (click)="showMessage(letter.idLetter, letter.isRead)">
-              <ion-avatar slot="start" [hidden]="visibility === letter.idLetter">
-                <img [src]="letter.sender.userAvatar">
-              </ion-avatar>
-              <ion-label [hidden]="visibility === letter.idLetter">
-                <h2>
-                  {{ letter.sender.userName }}
-                </h2>
-                <p>
-                  {{ letter.letterText }}
-                </p>
-              </ion-label>
-              <ion-icon ios="ios-mail" md="md-mail" [hidden]="letter.isRead || visibility === letter.idLetter"></ion-icon>
-              <ion-card [hidden]="visibility !== letter.idLetter">
-                
-                <ion-card-header>
-                  <ion-card-title>From {{ letter.sender.userName }}</ion-card-title>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  {{ letter.letterText }}
-                  <br>
-                  <br>
-                  <p (click)="reply(letter.sender.userName)">Ответить</p>
+                      <p class="date">{{ letter.date }}</p>
+                    </ion-card-content>
+                    
+                  </ion-card>
+                  <ion-checkbox color="primary" (ionChange)="multiChangeLetters(letter.idLetter, $event)"
+                  [hidden]="isMultiselect"></ion-checkbox>
+                </ion-item>
+              </div>
+            </ion-item-sliding>
 
-                  <p class="date">{{ letter.date }}</p>
-                </ion-card-content>
-                
-              </ion-card>
-              
-            </ion-item>
-          </ion-item-sliding>
-
+          </div>  
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-list>
+
+  <ion-item class="multiselectToolbar" [hidden]="isMultiselect">
+    <ion-icon ios="ios-trash" md="md-trash" 
+    (click)="multiselectDelete()"></ion-icon>
+    <ion-icon ios="ios-exit" md="md-exit"
+    (click)="closeMultiselect()"></ion-icon>
+  </ion-item>
 </ion-content>

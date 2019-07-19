@@ -1,19 +1,16 @@
-// Vendors
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IonicModule } from '@ionic/angular';
 
-// Pages
-import { IncomingPage } from 'src/app/mail/incoming/incoming.page';
-// Modules
-import { SharedModule } from 'src/app/shared/shared.module';
+import { UnreadedPage } from './unreaded.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: IncomingPage
+    component: UnreadedPage
   }
 ];
 
@@ -22,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    SharedModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [IncomingPage]
+  declarations: [UnreadedPage]
 })
-export class IncomingPageModule {}
+export class UnreadedPageModule {}

@@ -112,4 +112,12 @@ export class MailService {
             }, 400);
         }
     }
+
+    public async getUnreaded(idUser: number): Promise<Letters[]> {
+        return await this.mailRep.getUnreaded(idUser)
+    }
+
+    public async deleteMany(letters: number[]) {
+        return await this.mailRep.deleteMany(letters)
+    }
 }

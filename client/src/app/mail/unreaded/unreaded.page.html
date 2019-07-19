@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>unreaded</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    
+      <ion-list>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"> 
+            <ion-infinite-scroll-content
+            loadingSpinner="circles">
+              <ion-reorder-group id="reorder">
+                <ion-item-sliding *ngFor="let letter of letters"
+                (ionSwipe)="deleteLetter(letter.idLetter)">
+    
+                  <ion-item-options side="end" color="danger">
+                    <ion-item-option color="danger">
+                      <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+                    </ion-item-option>
+                  </ion-item-options>
+    
+                  <ion-item 
+                  (click)="showMessage(letter.idLetter, letter.isRead)">
+                    <ion-avatar slot="start" [hidden]="visibility === letter.idLetter">
+                      <img [src]="letter.sender.userAvatar">
+                    </ion-avatar>
+                    <ion-label [hidden]="visibility === letter.idLetter">
+                      <h2>
+                        {{ letter.sender.userName }}
+                      </h2>
+                      <p>
+                        {{ letter.letterText }}
+                      </p>
+                    </ion-label>
+                    <ion-icon ios="ios-mail" md="md-mail" [hidden]="letter.isRead || visibility === letter.idLetter"></ion-icon>
+                    <ion-card [hidden]="visibility !== letter.idLetter">
+                      
+                      <ion-card-header>
+                        <ion-card-title>From {{ letter.sender.userName }}</ion-card-title>
+                      </ion-card-header>
+                    
+                      <ion-card-content>
+                        {{ letter.letterText }}
+                        <br>
+                        <br>
+                        <p (click)="reply(letter.sender.userName)">Ответить</p>
+    
+                        <p class="date">{{ letter.date }}</p>
+                      </ion-card-content>
+                      
+                    </ion-card>
+                    <ion-reorder slot="end"></ion-reorder>
+                  </ion-item>
+                </ion-item-sliding>
+              </ion-reorder-group>
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-list>
+</ion-content>
